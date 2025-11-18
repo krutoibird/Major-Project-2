@@ -1,6 +1,6 @@
 # Major-Project-2
 
-import pygame
+'''import pygame
 
 pygame.init()
 
@@ -80,5 +80,5 @@ while game_active:
         game_active = False
 
     pygame.display.update()
-    pygame.time.Clock().tick(60)
+    pygame.time.Clock().tick(60)'''
 
