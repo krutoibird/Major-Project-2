@@ -1,0 +1,65 @@
+import pygame
+import math
+
+
+pygame.init()
+
+pygame.display.set_caption("NOT THE ACTUAL GAME")
+
+velocity = pygame.math.Vector2(0,0)
+background = pygame.image.load("Image/ground2.png")
+player_model = pygame.image.load("Image/Worm.png")
+block_model = pygame.image.load("Image/Block.png")
+apple_model = pygame.image.load("Image/Apple.png")
+
+
+class Worm(pygame.sprite.Sprite):
+    def __init__(self, design, spawning_location):
+        super().__init__()
+        self.design = design
+        self.spawning_location = spawning_location
+        self.rect = self.design.get_rect(center = spawning_location)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+gameactive = True
+jump_speed = 50
+gravity = 0.5
+floor = 310
+while gameactive:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            gameactive = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_w:
+                velocity += pygame.math.Vector2(0, -1)
+            if event.key == pygame.K_a:
+                velocity += pygame.math.Vector2(-1, 0)
+            if event.key == pygame.K_s:
+                velocity += pygame.math.Vector2(0, 1)
+            if event.key == pygame.K_d:
+                velocity += pygame.math.Vector2(1, 0)
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_w:
+                velocity += pygame.math.Vector2(0, 1)
+            if event.key == pygame.K_a:
+                velocity += pygame.math.Vector2(1, 0)
+            if event.key == pygame.K_s:
+                velocity += pygame.math.Vector2(0, -1)
+            if event.key == pygame.K_d:
+                velocity += pygame.math.Vector2(-1, 0)
+
+
