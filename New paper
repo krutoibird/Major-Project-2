@@ -63,3 +63,58 @@ while gameactive:
                 velocity += pygame.math.Vector2(-1, 0)
 
 
+
+screen = pygame.display.set_mode((1366, 768))
+pygame.display.set_caption("Game Menu")
+clock = pygame.time.Clock()
+
+
+menu_background = pygame.image.load("major_project/image/Good_background.png").convert()
+menu_background = pygame.transform.scale(menu_background, (1366, 768))
+
+button_start = pygame.image.load("major_project/image/start.png").convert_alpha()
+button_start_hover = pygame.image.load("major_project/image/start_behide.png").convert_alpha()
+
+scale_width = 0.7
+scale_height = 0.2
+narrow_factor = 0.85
+
+new_width = int(button_start.get_width() * scale_width * narrow_factor)
+new_height = int(button_start.get_height() * scale_height)
+
+button_start = pygame.transform.scale(button_start, (new_width, new_height))
+button_start_hover = pygame.transform.scale(button_start_hover, (new_width, new_height))
+
+start_button_rect = button_start.get_rect(center=(1050, 420))
+
+
+menu_running = True
+while menu_running:
+    mouse_pos = pygame.mouse.get_pos()
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if start_button_rect.collidepoint(mouse_pos):
+                print("Start Game!")
+                menu_running = False
+
+    screen.blit(menu_background, (0, 0))
+
+    if start_button_rect.collidepoint(mouse_pos):
+        screen.blit(button_start_hover, start_button_rect)
+    else:
+        screen.blit(button_start, start_button_rect)
+
+    pygame.display.flip()
+    clock.tick(60)
+
+
+start_main_game(screen, clock)
+
+pygame.quit()
+
+
