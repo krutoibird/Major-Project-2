@@ -69,11 +69,11 @@ pygame.display.set_caption("Game Menu")
 clock = pygame.time.Clock()
 
 
-menu_background = pygame.image.load("major_project/image/Good_background.png").convert()
+menu_background = pygame.image.load("image/background.png").convert()
 menu_background = pygame.transform.scale(menu_background, (1366, 768))
 
-button_start = pygame.image.load("major_project/image/start.png").convert_alpha()
-button_start_hover = pygame.image.load("major_project/image/start_behide.png").convert_alpha()
+button_start = pygame.image.load("image/start.png").convert_alpha()
+button_start_hover = pygame.image.load("image/start_behide.png").convert_alpha()
 
 scale_width = 0.7
 scale_height = 0.2
