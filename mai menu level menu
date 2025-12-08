@@ -1,0 +1,193 @@
+import pygame  #import pygame library for game development
+pygame.init()  #initialize pygame to use its functions
+
+#screen settings
+SCREEN_WIDTH = 1366  #width of the game window
+SCREEN_HEIGHT = 768  #height of the game window
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))  #create window for display
+pygame.display.set_caption("Game Menu")  #set window title
+clock = pygame.time.Clock()  #create clock to control FPS
+
+#load main menu background
+menu_background = pygame.image.load("major_project/image/real_background.png").convert()  #load background image
+menu_background = pygame.transform.scale(menu_background, (SCREEN_WIDTH, SCREEN_HEIGHT))  #scale background to full window
+
+#load start button
+button_start = pygame.image.load("major_project/image/real_start.png").convert_alpha()  #load button image with transparency
+
+#set start button size
+button_width = 240  #button width
+button_height = 120  #button height
+button_start = pygame.transform.scale(button_start, (button_width, button_height))  #scale button
+
+#set start button position
+start_button_rect = button_start.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 140))  #center button slightly lower
+
+#hover size for start button
+scaled_width = int(button_width * 1.15) #width when hovered
+scaled_height = int(button_height * 1.15) #height when hovered
+
+#main menu loop
+menu_running = True  #flag for main menu loop
+while menu_running:  #main menu loop
+    mouse_pos = pygame.mouse.get_pos()  #get mouse position
+    for event in pygame.event.get():  #check all events
+        if event.type == pygame.QUIT:  #window close clicked
+            pygame.quit()  #close pygame
+            exit()  #exit program
+        if event.type == pygame.MOUSEBUTTONDOWN:  #check mouse click
+            if start_button_rect.collidepoint(mouse_pos):  #clicked start button
+                menu_running = False  #exit menu loop to level menu
+
+    screen.blit(menu_background, (0, 0))  #draw background
+    if start_button_rect.collidepoint(mouse_pos):  #hover effect
+        enlarged_button = pygame.transform.scale(button_start, (scaled_width, scaled_height))  #enlarge button
+        enlarged_rect = enlarged_button.get_rect(center=start_button_rect.center)  #keep centered
+        screen.blit(enlarged_button, enlarged_rect)  #draw enlarged button
+    else:
+        screen.blit(button_start, start_button_rect)  #draw normal button
+
+    pygame.display.flip()  #update display
+    clock.tick(60)  #limit fps
+
+#load level menu resources
+level_menu_sky_surface = pygame.image.load("major_project/image/real_level_background.png").convert()  #load level background
+level_menu_sky_surface = pygame.transform.scale(level_menu_sky_surface, (SCREEN_WIDTH, SCREEN_HEIGHT))  #scale to full window
+
+level_button_width = 120  #level button width
+level_button_height = 120  #level button height
+scaled_level_w = int(level_button_width * 1.15)  #hover width
+scaled_level_h = int(level_button_height * 1.15)  #hover height
+
+#load level buttons
+level1_button = pygame.image.load("major_project/image/1level_button.png").convert_alpha()  #load level1 button
+level1_button = pygame.transform.scale(level1_button, (level_button_width, level_button_height))  #scale level1
+level2_button = pygame.image.load("major_project/image/2level_button.png").convert_alpha()  #load level2 button
+level2_button = pygame.transform.scale(level2_button, (level_button_width, level_button_height))  #scale level2
+level3_button = pygame.image.load("major_project/image/3level_button.png").convert_alpha()  #load level3 button
+level3_button = pygame.transform.scale(level3_button, (level_button_width, level_button_height))  #scale level3
+level4_button = pygame.image.load("major_project/image/4level_button.png").convert_alpha()  #load level4 button
+level4_button = pygame.transform.scale(level4_button, (level_button_width, level_button_height))  #scale level4
+level5_button = pygame.image.load("major_project/image/5level_button.png").convert_alpha()  #load level5 button
+level5_button = pygame.transform.scale(level5_button, (level_button_width, level_button_height))  #scale level5
+
+#level button positions
+button_gap = 50  #horizontal space between buttons
+total_width = level_button_width * 5 + button_gap * 4  #total width of all buttons
+start_x = SCREEN_WIDTH // 2 - total_width // 2  #starting x for first button
+start_y = SCREEN_HEIGHT // 2 - 200  #y position for buttons
+
+#set rectangle positions for each level button
+level1_rect = level1_button.get_rect(topleft=(start_x, start_y))  #level1
+level2_rect = level2_button.get_rect(topleft=(start_x + (level_button_width + button_gap) * 1, start_y))  #level2
+level3_rect = level3_button.get_rect(topleft=(start_x + (level_button_width + button_gap) * 2, start_y))  #level3
+level4_rect = level4_button.get_rect(topleft=(start_x + (level_button_width + button_gap) * 3, start_y))  #level4
+level5_rect = level5_button.get_rect(topleft=(start_x + (level_button_width + button_gap) * 4, start_y))  #level5
+
+#back button
+back_button = pygame.image.load("major_project/image/real_back_game start_menu_button.png").convert_alpha()  #load back button
+back_button_width = back_button.get_width()  #get back button width
+back_button_height = back_button.get_height()  #get back button height
+back_button_rect = back_button.get_rect(topleft=(50, SCREEN_HEIGHT // 2 - back_button_height // 2))  #position back button
+scaled_back_w = int(back_button_width * 1.15)  #hover width
+scaled_back_h = int(back_button_height * 1.15)  #hover height
+
+#level menu loop 
+
+level_menu_running = True  #flag for level menu loop
+while level_menu_running:  #level menu loop
+    mouse_pos = pygame.mouse.get_pos()  #get mouse position
+    for event in pygame.event.get():  #check all events
+        if event.type == pygame.QUIT:  #quit clicked
+            pygame.quit()  
+            exit()  #exit program
+        if event.type == pygame.MOUSEBUTTONDOWN:  #mouse click check
+            if back_button_rect.collidepoint(mouse_pos):  #clicked back button
+                menu_running = True  #return to main menu
+                while menu_running:  #main menu loop
+                    mouse_pos = pygame.mouse.get_pos()  #get mouse position
+                    for e in pygame.event.get():  #check events
+                        if e.type == pygame.QUIT:  #quit clicked
+                            pygame.quit()  
+                            exit()  #exit program
+                        if e.type == pygame.MOUSEBUTTONDOWN:  #mouse click check
+                            if start_button_rect.collidepoint(mouse_pos):  #clicked start button
+                                menu_running = False  #exit main menu
+                    screen.blit(menu_background, (0, 0))  #draw background
+                    if start_button_rect.collidepoint(mouse_pos):  #hover effect
+                        enlarged_button = pygame.transform.scale(button_start, (scaled_width, scaled_height))  #enlarge button
+                        enlarged_rect = enlarged_button.get_rect(center=start_button_rect.center)  #keep centered
+                        screen.blit(enlarged_button, enlarged_rect)  #draw enlarged
+                    else:
+                        screen.blit(button_start, start_button_rect)  #draw normal
+                    pygame.display.flip()  #update display
+                    clock.tick(60)  #limit fps
+
+            #level buttons click
+            if level1_rect.collidepoint(mouse_pos):  #enter level1
+                level1_running = True  #flag for level1 loop
+                while level1_running:  #level1 loop
+                    for e in pygame.event.get():  #check events
+                        if e.type == pygame.QUIT:  #quit clicked
+                            pygame.quit()  
+                            exit()  #exit program
+                    screen.fill((0,0,0))  #black background
+                    pygame.display.flip()  #update display
+            if level2_rect.collidepoint(mouse_pos):  #enter level2
+                level2_running = True  #flag for level2 loop
+                while level2_running:  #level2 loop
+                    for e in pygame.event.get():  #check events
+                        if e.type == pygame.QUIT:  #quit clicked
+                            pygame.quit()  
+                            exit()  #exit program
+                    screen.fill((20,20,20))  #dark gray background
+                    pygame.display.flip()  #update display
+            if level3_rect.collidepoint(mouse_pos):  #enter level3
+                level3_running = True  #flag for level3 loop
+                while level3_running:  #level3 loop
+                    for e in pygame.event.get():  #check events
+                        if e.type == pygame.QUIT:  #quit clicked
+                            pygame.quit()  
+                            exit()  #exit program
+                    screen.fill((40,40,40))  #gray background
+                    pygame.display.flip()  #update display
+            if level4_rect.collidepoint(mouse_pos):  #enter level4
+                level4_running = True  #flag for level4 loop
+                while level4_running:  #level4 loop
+                    for e in pygame.event.get():  #check events
+                        if e.type == pygame.QUIT:  #quit clicked
+                            pygame.quit()  
+                            exit()  #exit program
+                    screen.fill((60,60,60))  #darker gray background
+                    pygame.display.flip()  #update display
+            if level5_rect.collidepoint(mouse_pos):  #enter level5
+                level5_running = True  #flag for level5 loop
+                while level5_running:  #level5 loop
+                    for e in pygame.event.get():  #check events
+                        if e.type == pygame.QUIT:  #quit clicked
+                            pygame.quit()  
+                            exit()  #exit program
+                    screen.fill((80,80,80))  #darkest gray background
+                    pygame.display.flip()  #update display
+
+    screen.blit(level_menu_sky_surface, (0, 0))  #draw level menu background
+    #draw level buttons hover effect
+    for button, rect in zip([level1_button, level2_button, level3_button, level4_button, level5_button],
+                            [level1_rect, level2_rect, level3_rect, level4_rect, level5_rect]):
+        if rect.collidepoint(mouse_pos):  #hover check
+            enlarged = pygame.transform.scale(button, (scaled_level_w, scaled_level_h))  #enlarge button
+            enlarged_rect = enlarged.get_rect(center=rect.center)  #keep centered
+            screen.blit(enlarged, enlarged_rect)  #draw enlarged
+        else:
+            screen.blit(button, rect)  #draw normal
+
+    #draw back button hover effect
+    if back_button_rect.collidepoint(mouse_pos):  #hover check back button
+        enlarged_back = pygame.transform.scale(back_button, (scaled_back_w, scaled_back_h))  #enlarge back button
+        enlarged_back_rect = enlarged_back.get_rect(center=back_button_rect.center)  #keep centered
+        screen.blit(enlarged_back, enlarged_back_rect)  #draw enlarged
+    else:
+        screen.blit(back_button, back_button_rect)  #draw normal back button
+
+    pygame.display.flip()  #update display
+    clock.tick(60)  #limit fps
