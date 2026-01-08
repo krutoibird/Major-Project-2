@@ -1,6 +1,6 @@
 
 import pygame
-from menu import main-menu, run_level, level_menu
+from menu import main_menu, run_level, level_menu
 from game import Game
 from settings import SCREEN_WIDTH, SCREEN_HEIGHT, FPS
 
