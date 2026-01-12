@@ -15,3 +15,4 @@ class Apple:
         py = gy * TILE_SIZE
 
         self.game.screen.blit(self.game.apple_img, (px, py))
+#2
