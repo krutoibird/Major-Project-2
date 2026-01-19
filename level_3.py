@@ -4,7 +4,7 @@
 # O = apple / goal
 # . = empty
 # $ = black hole / passgame 
-# ? = viod go back spwan
+# ? = void go back spwan
 
 LEVEL_3_MAP = [
     "..................",
