@@ -65,13 +65,11 @@ class Worm:
         if supported:
             return
 
-        hx, hy = self.head()
-        new_head = (hx, hy + 1)
+        new_segments = []
+        for (sx, sy) in self.segments:
+            new_segments.append((sx, sy + 1))
 
-        if new_head in self.segments:
-            return
-
-        self._move_to(new_head)
+        self.segments = new_segments
 
     def _move_to(self, new_head):
         self.segments.insert(0, new_head)

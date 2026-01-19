@@ -2,7 +2,7 @@
 import pygame
 from menu import main_menu, run_level, level_menu
 from game import Game
-from settings import SCREEN_WIDTH, SCREEN_HEIGHT, FPS
+from settings import SCREEN_WIDTH, SCREEN_HEIGHT
 
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -20,10 +20,9 @@ while True:
         if choice == "main_menu":
             state = "main_menu"
         else:
-            # start chosen level
-            game = Game(level=choice)  # We can choose levels now
-            game.run()
-            state = "main_menu"
+            game = Game(level=choice)
+            result = game.run()
+            state = result
 
     else:
         pygame.quit()

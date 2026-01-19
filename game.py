@@ -3,6 +3,7 @@ from settings import SCREEN_WIDTH, SCREEN_HEIGHT, FPS, GRID_HEIGHT
 from block import Block
 from worm import Worm
 from apple import Apple
+from tunnel import Tunnel
 
 class Game:
     def __init__(self, level=1):
@@ -13,27 +14,27 @@ class Game:
 
         # Load images
         self.background_img = pygame.transform.scale(
-            pygame.image.load("assets/gameplay/Sky.png").convert(),
+            pygame.image.load("assets/Sky.png").convert(),
             (SCREEN_WIDTH, SCREEN_HEIGHT)
         )
 
         self.block_img = pygame.transform.scale(
-            pygame.image.load("assets/gameplay/Terre.png").convert(),
+            pygame.image.load("assets/Terre.png").convert(),
             (60, 60)
         )
 
         self.apple_img = pygame.transform.scale(
-            pygame.image.load("assets/gameplay/Apple.png").convert_alpha(),
+            pygame.image.load("assets/Apple.png").convert_alpha(),
             (60, 60)
         )
 
         self.head_img = pygame.transform.scale(
-            pygame.image.load("assets/gameplay/wormhead.png").convert_alpha(),
+            pygame.image.load("assets/wormhead.png").convert_alpha(),
             (60, 60)
         )
 
         self.body_img = pygame.transform.scale(
-            pygame.image.load("assets/gameplay/wormbody.png").convert_alpha(),
+            pygame.image.load("assets/wormbody.png").convert_alpha(),
             (60, 60)
         )
       
@@ -46,6 +47,8 @@ class Game:
             Apple(self, (8, apple_y)),
             Apple(self, (12, apple_y))
         ]
+
+        self.tunnel = Tunnel(self, (14, apple_y))
 
         self.clock = pygame.time.Clock()
         self.running = True
@@ -71,6 +74,7 @@ class Game:
     def draw(self):
         self.screen.blit(self.background_img, (0, 0))
         self.block.draw()
+        self.tunnel.draw()
 
         for apple in self.apples:
             apple.draw()
@@ -83,4 +87,10 @@ class Game:
             self.handle_events()
             self.worm.apply_gravity()
             self.draw()
+
+            if self.worm.head() == self.tunnel.position:
+                return "level_select"
+
             self.clock.tick(FPS)
+
+        return "main_menu"
