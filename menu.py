@@ -22,8 +22,6 @@ level_menu_bg = pygame.transform.scale(level_menu_bg, (SCREEN_WIDTH, SCREEN_HEIG
 level_size = (120, 120)
 hover_level_size = (int(120 * 1.15), int(120 * 1.15))
 button_gap = 50
-total_levels_first_row = 5
-total_levels_second_row = 5 
 
 # Back button
 back_button = pygame.image.load(
@@ -38,29 +36,39 @@ hover_back_size = (
 )
 
 # Level buttons 1~10
-level_buttons = []
-for i in range(1, 11):
-    img = pygame.image.load(f"major_project/image/{i}level_button.png").convert_alpha()
-    level_buttons.append(pygame.transform.scale(img, level_size))
+level1_button = pygame.transform.scale(pygame.image.load("major_project/image/1level_button.png").convert_alpha(), level_size)
+level2_button = pygame.transform.scale(pygame.image.load("major_project/image/2level_button.png").convert_alpha(), level_size)
+level3_button = pygame.transform.scale(pygame.image.load("major_project/image/3level_button.png").convert_alpha(), level_size)
+level4_button = pygame.transform.scale(pygame.image.load("major_project/image/4level_button.png").convert_alpha(), level_size)
+level5_button = pygame.transform.scale(pygame.image.load("major_project/image/5level_button.png").convert_alpha(), level_size)
+level6_button = pygame.transform.scale(pygame.image.load("major_project/image/6level_button.png").convert_alpha(), level_size)
+level7_button = pygame.transform.scale(pygame.image.load("major_project/image/7level_button.png").convert_alpha(), level_size)
+level8_button = pygame.transform.scale(pygame.image.load("major_project/image/8level_button.png").convert_alpha(), level_size)
+level9_button = pygame.transform.scale(pygame.image.load("major_project/image/9level_button.png").convert_alpha(), level_size)
+level10_button = pygame.transform.scale(pygame.image.load("major_project/image/10level_button.png").convert_alpha(), level_size)
 
+# Position level buttons
 
+total_levels_first_row = 5
 start_x_first = SCREEN_WIDTH // 2 - (level_size[0] * total_levels_first_row + button_gap * (total_levels_first_row - 1)) // 2
 start_y_first = SCREEN_HEIGHT // 2 - 200
 
-level_rects = []
+level1_rect = level1_button.get_rect(topleft=(start_x_first + (level_size[0] + button_gap) * 0, start_y_first))
+level2_rect = level2_button.get_rect(topleft=(start_x_first + (level_size[0] + button_gap) * 1, start_y_first))
+level3_rect = level3_button.get_rect(topleft=(start_x_first + (level_size[0] + button_gap) * 2, start_y_first))
+level4_rect = level4_button.get_rect(topleft=(start_x_first + (level_size[0] + button_gap) * 3, start_y_first))
+level5_rect = level5_button.get_rect(topleft=(start_x_first + (level_size[0] + button_gap) * 4, start_y_first))
 
-for i in range(5):
-    rect = level_buttons[i].get_rect(topleft=(start_x_first + i * (level_size[0] + button_gap), start_y_first))
-    level_rects.append(rect)
 
-
+total_levels_second_row = 5
+start_x_second = SCREEN_WIDTH // 2 - (level_size[0] * total_levels_second_row + button_gap * (total_levels_second_row - 1)) // 2
 start_y_second = start_y_first + level_size[1] + 20
-total_width_second_row = level_size[0] * total_levels_second_row + button_gap * (total_levels_second_row - 1)
-start_x_second = SCREEN_WIDTH // 2 - total_width_second_row // 2
 
-for i in range(5, 10):
-    rect = level_buttons[i].get_rect(topleft=(start_x_second + (i - 5) * (level_size[0] + button_gap), start_y_second))
-    level_rects.append(rect)
+level6_rect = level6_button.get_rect(topleft=(start_x_second + (level_size[0] + button_gap) * 0, start_y_second))
+level7_rect = level7_button.get_rect(topleft=(start_x_second + (level_size[0] + button_gap) * 1, start_y_second))
+level8_rect = level8_button.get_rect(topleft=(start_x_second + (level_size[0] + button_gap) * 2, start_y_second))
+level9_rect = level9_button.get_rect(topleft=(start_x_second + (level_size[0] + button_gap) * 3, start_y_second))
+level10_rect = level10_button.get_rect(topleft=(start_x_second + (level_size[0] + button_gap) * 4, start_y_second))
 
 # MAIN MENU FUNCTION
 def main_menu():
@@ -97,16 +105,31 @@ def level_menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if back_button_rect.collidepoint(mouse):
                     return "main_menu"
-                
-                for i, rect in enumerate(level_rects):
-                    if rect.collidepoint(mouse):
-                        return run_level(i + 1)
+
+                if level1_rect.collidepoint(mouse):
+                    return run_level(1)
+                if level2_rect.collidepoint(mouse):
+                    return run_level(2)
+                if level3_rect.collidepoint(mouse):
+                    return run_level(3)
+                if level4_rect.collidepoint(mouse):
+                    return run_level(4)
+                if level5_rect.collidepoint(mouse):
+                    return run_level(5)
+                if level6_rect.collidepoint(mouse):
+                    return run_level(6)
+                if level7_rect.collidepoint(mouse):
+                    return run_level(7)
+                if level8_rect.collidepoint(mouse):
+                    return run_level(8)
+                if level9_rect.collidepoint(mouse):
+                    return run_level(9)
+                if level10_rect.collidepoint(mouse):
+                    return run_level(10)
 
         screen.blit(level_menu_bg, (0, 0))
 
-        
-        for i, rect in enumerate(level_rects):
-            img = level_buttons[i]
+        def draw_button(img, rect):
             if rect.collidepoint(mouse):
                 enlarged = pygame.transform.scale(img, hover_level_size)
                 r = enlarged.get_rect(center=rect.center)
@@ -114,7 +137,17 @@ def level_menu():
             else:
                 screen.blit(img, rect)
 
-        # Back button
+        draw_button(level1_button, level1_rect)
+        draw_button(level2_button, level2_rect)
+        draw_button(level3_button, level3_rect)
+        draw_button(level4_button, level4_rect)
+        draw_button(level5_button, level5_rect)
+        draw_button(level6_button, level6_rect)
+        draw_button(level7_button, level7_rect)
+        draw_button(level8_button, level8_rect)
+        draw_button(level9_button, level9_rect)
+        draw_button(level10_button, level10_rect)
+
         if back_button_rect.collidepoint(mouse):
             enlarged = pygame.transform.scale(back_button, hover_back_size)
             rect = enlarged.get_rect(center=back_button_rect.center)
